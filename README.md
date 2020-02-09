@@ -224,7 +224,7 @@ if there are no previous exceptions with command table API functions console_beg
 
 **Call Console API functions**
 ~~~~~
-Example:
+Example :-
 
 console_begin(console, command_list);
 
@@ -244,6 +244,24 @@ console_exec_command(console, command_list, buffer);
 ~~~~~
 
 </br>
+
+5. Exception handling functions are provided to throw and catch, exceptions produced by the console APIs, Exception, handling functions are dependent on console handle. Console APIs throw exceptions internally to the console handle,
+which can be caught by the catch_exception(...) function or viewed as, symbols in a live debug view.
+
+</br>
+
+<pre>
+throw_exception(...), console handle object and exception type as, arameters.
+
+List of exceptions values can be viewed in cl_term.h file.
+
+catch_exception(...), console handle object and exception state as parameters.
+if exception state = EXCEPTION_HOLD_STATE, then catch exception function will block, 
+the state of the program and report the exception to the terminal.
+</pre>
+
+**Exception Handling**
+
 
 ## Contributors and Maintainers
 Aditya Mall (UTA MSEE)
