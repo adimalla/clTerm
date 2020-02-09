@@ -15,11 +15,12 @@
 <br/>
 
 <img src="https://github.com/adimalla/clTerm/blob/master/screenshots/Selection_328.jpg" width="700" height="500" title="CLI">
-
+<br/>
 
 ## Description
 clTerm is an easy to port API based serial terminal utility which allows,users to add standard C like "command line arguments" based functions, or commands to their application. This utility is implemented via callback, which allows portability across any micro-controller that supports serial protocols.
 
+<br/>
 
 ## Features
 
@@ -35,11 +36,14 @@ clTerm is an easy to port API based serial terminal utility which allows,users t
 * Linked List based command table for efficient resource management.
 * String operation based utilities.
 
+<br/>
 
 ## Porting and Instalation
 Clone repository to the destination directory, include CLTERM_API into include files for the IDE, exclude or remove Examples test code if building a new application.
 
 puTTY terminal is recommended for application development and testing with this utility.
+
+<br/>
 
 ## Usage
 
