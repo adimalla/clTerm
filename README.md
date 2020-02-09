@@ -45,12 +45,11 @@ Additionally it is a good academic excercise for leanring how to add command lin
 Clone repository to the destination directory, include CLTERM_API into include files for the IDE, exclude or remove Examples test code if building a new application.
 
 puTTY terminal is recommended for application development and testing with this utility.
-
 <br/>
 
 ## Usage
 
-The API consists of four basic structures :-
+##### The API consists of four basic structures :-
 
 <pre>
 1. API operations structure : Used for linking external basic serial operations to the API.
@@ -63,6 +62,95 @@ The API consists of four basic structures :-
 4. API methods/functions    : API functions which are responsible for getting user input, executing 
                               user commands along with exception handling functions.
 </pre>
+
+##### API Initialization and Configuration :-
+
+<pre>
+1. Link console API operations structure with function wrappers.
+   It is initilaized by linking the user or vendor provided serial API functions to the function pointers,
+   present in the structure below. This can be done by creating simple wrapper functions to match the,
+   parameters and return type of the functions. Shown below.
+</pre>
+
+~~~~
+/* Call back functions  */
+typedef struct _console_operations
+{
+    uint8_t (*open)(uint32_t baudrate);                   
+    uint8_t (*print_char)(char data);                     
+    char    (*read_char)(void);                           
+    int8_t  (*write)(const char *buffer, int16_t length);  
+    int8_t  (*read)(char *read_buffer, int16_t length);    
+
+}console_ops_t;
+~~~~
+
+`uint8_t (*open)(uint32_t baudrate);` </br>
+Initialize serial hardware, (must return 0 for error, 1 for success), link serial init function with this call,
+which can get baudrate or serial speed as parameter or empty/dummy baudrate value if user serial init configures,
+fixed baudrate or speed internally.
+
+`uint8_t (*print_char)(char data);` </br>
+Writes character / byte data to serial ineterface or hardware, link user or vendor char (byte) write function to this,
+call.
+
+`char(*read_char)(void);` </br>
+Reads character / byte data from serial interface, link user or vendor function which performs the same operation to this,
+call.
+
+**Create Wrapper Functions :-**
+
+~~~~
+Example : for uint8_t (*open)(uint32_t baud_rate)
+
+uint8_t simple_open(uint32_t baud_rate)
+{     
+  // User;s own serial initialization function
+  your_uart0_init(void);
+  
+  // Must return 1 to indicate success.
+  return 1;
+}
+
+OR
+
+uint8_t serial_open(uint32_t baud_rate)
+{
+  // User's own serial initialization function
+  your_uart0_init(GPIOA, UART0, baud_rate);     
+  
+  // Must return 1 to indicate success.
+  return 1;
+}
+
+Example : for uint8_t (*print_char)(char data) and char (*read_char)(void)
+
+uint8_t my_print_char(char data)
+{
+    putcUart0(data);
+
+    return 0;
+}
+
+char my_read_char(void)
+{
+  return getcUart0();
+}
+
+~~~~
+
+**Link Wrapper functions to API operations structure :-**
+~~~~~
+console_ops_t serial_ops =
+{
+
+ .open       = serial_open,
+ .print_char = my_print_char,
+ .read_char  = my_read_char,
+
+};
+~~~~~
+
 
 
 
