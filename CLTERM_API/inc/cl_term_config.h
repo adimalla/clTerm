@@ -64,7 +64,7 @@
 
 
 /* Command list table defines */
-#define MAX_TABLE_SIZE  3
+#define MAX_TABLE_SIZE  20
 #define CMD_NAME_SIZE   15
 
 
