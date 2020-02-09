@@ -622,10 +622,6 @@ int main(void)
 
     exception |= add_command(command_list, "print", myCommand2);
 
-    exception |= add_command(command_list, "init", myCommand1);
-
-    exception |= add_command(command_list, "start_motor", myCommand1);
-
 
     throw_exception(myConsole, (console_exceptions_t)exception);
 
