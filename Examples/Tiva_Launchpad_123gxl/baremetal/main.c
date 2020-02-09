@@ -144,7 +144,7 @@ void init_uart0(void)
 // Blocking function that writes a serial character when the UART buffer is not full
 void putcUart0(const char c)
 {
-    (UART0_FR_R & UART_FR_TXFF);
+    while(UART0_FR_R & UART_FR_TXFF);
     UART0_DR_R = c;
 
 }
@@ -164,7 +164,7 @@ void putsUart0(const char* str)
 {
     uint8_t i;
 
-    for (i = 0; i < uSTRLEN(str); i++)
+    for (i = 0; i < strlen(str); i++)
         putcUart0(str[i]);
 }
 
@@ -322,7 +322,7 @@ cl_term_t *myConsole;
 /******************************************************************************/
 /*                                                                            */
 /*                  clTerm command table configurations                       */
-/*                      and Starting the Console.                             */
+/*                         and adding commands.                               */
 /*                                                                            */
 /******************************************************************************/
 
@@ -384,18 +384,6 @@ cl_term_t *myConsole;
  *
  *  add_command(command_list, "command2", yourCommand2);
  *
- *
- *  3) Start console by calling the console_begin(..) function.
- *     it takes console handle object and command table object as parameters.
- *     if there are no previous exceptions with command table API functions,
- *     console_begin executes successfully, or returns exception to console,
- *     handle which can be handle by catch_exception(...) function.
- *
- *   Example:
- *
- *   console_begin(console, command_list);
- *
- *
  ******************************************************************************/
 
 
@@ -406,14 +394,130 @@ cl_term_t *myConsole;
 /*                                                                            */
 /******************************************************************************/
 
-
+/*
+ * Turns the on board RED LED on and off and prints operation,
+ * to serial terminal. when "red on/off" is entered by the user.
+ * Uses bare metal functions.
+ */
 int myCommand1(int argc, char **argv)
 {
+    int count = 0;
+    int index = 0;
 
+    count = argc;
 
+    /*Check argument count, 1st argument is the command,
+     *name itself.
+     */
+    if(count < 2)
+    {
+        putsUart0("Error: Less number of args entered \r\n");
+    }
+    else if(count > 2)
+    {
+        putsUart0("Error: Greater number of args entered \r\n");
+    }
+    else
+    {
+        putsUart0("\r\n");
+
+        /*index = 0, first arg on index 0 is the command name,
+         *index = 1, command argument.
+         */
+        if( strcmp(argv[index + 1], "on") == 0 )
+        {
+            ONBOARD_RED_LED = 1;
+
+            putsUart0("RED LED is ON \r\n");
+
+        }
+        else if( strcmp(argv[index + 1], "off") == 0 )
+        {
+            ONBOARD_RED_LED = 0;
+
+            putsUart0("RED LED is OFF \r\n");
+        }
+        else
+        {
+            putsUart0("Wrong argument entered \r\n");
+        }
+
+        putsUart0("\r\n");
+
+        /*User can also add checks for correct command name by,
+         *checking argv[index] where index = 0.
+         */
+    }
+
+    return 0;
+}
+
+/*
+ * Print the list of all arguments added by the user.
+ * Uses print api provided by clTerm utlity.
+ * API only works for external function if console,
+ * object is global.
+ */
+int myCommand2(int argc, char **argv)
+{
+    int index = 0;
+
+    console_print(myConsole, "\n");
+
+    for(index = 1; index < argc; index++)
+    {
+        console_print(myConsole, argv[index]);
+        console_print(myConsole, "\n");
+    }
+
+    console_print(myConsole, "\n");
+
+    return 0;
 }
 
 
+
+/******************************************************************************/
+/*                                                                            */
+/*                 Starting the console and executing commands.                */
+/*                                                                            */
+/******************************************************************************/
+
+
+/*****************************************************************************
+ *
+ * Info:-
+ *  The commands are executed by calling the console_begin(...) followed by,
+ *  calling the console_get_string(...) to get user input and finally,
+ *  calling the console_exec_command(...) to execute the correct entered by,
+ *  the user.
+ *
+ * Initialization.
+ *
+ *  1) Start console by calling the console_begin(..) function.
+ *     it takes console handle object and command table object as parameters.
+ *     if there are no previous exceptions with command table API functions,
+ *     console_begin executes successfully, or returns exception to console,
+ *     handle which can be handle by catch_exception(...) function.
+ *
+ *  Example:
+ *
+ *     console_begin(console, command_list);
+ *
+ *  2) Call console_get_string(...), takes two parameters, object to console,
+ *     handle and max input buffer size.
+ *
+ *  Example:
+ *
+ *     console_get_string(console, MAX_INPUT_SIZE);
+ *
+ *
+ *  3) Call console_exec_command(...), takes console object, command table object,
+ *     and user input buffer as parameters. This call is dependent upon successful,
+ *     execution of console_begin(..) function otherwise exception is generated.
+ *
+ *
+ ******************************************************************************/
 
 
 /**
@@ -422,24 +526,46 @@ int myCommand1(int argc, char **argv)
 int main(void)
 {
 
-    //Initialize variables
+    /*Initialize variables*/
     bool loop = false;
 
     char serial_buffer[MAX_INPUT_SIZE] = {0};
 
-    //Initialize peripheral hardware (CLOCK and board led GPIO)
+    command_table_t *command_list;
+
+
+    /*Initialize peripheral hardware (CLOCK and board led GPIO)*/
     initHw();
 
-    //Create console handle, initializes UART/serial hardware
+
+    /*Create console handle, initializes UART/serial hardware*/
     myConsole = console_open(&myUartOperations, BAUDRATE, serial_buffer, CONSOLE_STATIC);
+
+
+    /*Create table object*/
+    command_list = create_command_list(myConsole, MAX_TABLE_SIZE);
+
+
+    /*Add user commands*/
+    add_command(command_list, "red", myCommand1);
+
+    add_command(command_list, "print", myCommand2);
+
+
+
+    /*Start console*/
+    console_begin(myConsole, command_list);
 
 
     loop = true;
 
     while(loop)
     {
-        //Get input from user
+        /* Get input from user */
         console_get_string(myConsole, MAX_INPUT_SIZE);
+
+        /* Execute user commands */
+        console_exec_command(myConsole, command_list, serial_buffer);
 
     }
 
