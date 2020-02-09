@@ -318,8 +318,8 @@ catch_exception(myConsole, EXCEPTION_HOLD_STATE);
 </br>
 
 ## Utility Default Commands and Testing
-After successfull build and run of application, the followig default screen will appear with '$' prompt.
-<img src="https://github.com/adimalla/clTerm/blob/master/screenshots/Selection_333.jpg" width="500" height="350" title="CLI">
+After successfull build and run of application, the followig default screen will appear with '$' prompt. </br>
+<img src="https://github.com/adimalla/clTerm/blob/v1.1/screenshots/Selection_333.jpg" width="500" height="350" title="CLI">
 
 
 
