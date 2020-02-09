@@ -12,7 +12,7 @@ clTerm, API based protable serial terminal utility.
 <br/>
 <br/>
 
-<img src="https://github.com/adimalla/clterm" width="700" height="700" title="CLI">
+<img src="https://github.com/adimalla/clTerm/blob/master/screenshots/Selection_327.jpg" width="700" height="700" title="CLI">
 
 
 ## Description
