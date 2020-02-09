@@ -209,7 +209,7 @@ typedef struct _command_table
 
 </br>
 
-**Create Command Table List and Add command **
+**Create Command Table List and Add command**
 ~~~~~
 Example :-
 
