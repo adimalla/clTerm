@@ -206,12 +206,37 @@ typedef struct _command_table
 ~~~~~
 Example :-
 
+/* User defined test command to print all arguments entered by user */
+int test1(int argc, char **argv)
+{
+
+    int index = 0;
+    int count = 0;
+
+    count = argc;
+
+    console_print(console, "test command \n");
+
+    for(index = 1; index < count; index++)
+    {
+        console_print(console, argv[index]);
+
+        console_print(console, "\n");
+    }
+
+    return 0;
+}
+
+
 command_table_t *command_list;
 
 command_list = create_command_list(console, MAX_TABLE_SIZE);
 
+add_command(command_list, "test1", test1);
+
 if(!commmand_list)
   assert(error);
+  
 ~~~~~
 
 </br>
@@ -260,7 +285,18 @@ if exception state = EXCEPTION_HOLD_STATE, then catch exception function will bl
 the state of the program and report the exception to the terminal.
 </pre>
 
-**Exception Handling**
+</br>
+**Call Exception Handling functions **
+~~~~~
+int8_t exception;
+
+exception |= add_command(command_list, "test1", test1);
+
+throw_exception(myConsole, (console_exceptions_t)exception);
+
+catch_exception(myConsole, EXCEPTION_HOLD_STATE);
+
+~~~~~
 
 
 ## Contributors and Maintainers
