@@ -317,9 +317,29 @@ catch_exception(myConsole, EXCEPTION_HOLD_STATE);
 ~~~~~
 </br>
 
-## Utility Default Commands and Testing
-After successfull build and run of application, the followig default screen will appear with '$' prompt. </br>
-<img src="https://github.com/adimalla/clTerm/blob/v1.1/screenshots/Selection_333.jpg" width="500" height="350" title="CLI">
+## clTerm Default Commands and Testing
+</br>
+After successfull build and run of application, the followig default screen will appear with '$' prompt. 
+</br>
+
+<img src="https://github.com/adimalla/clTerm/blob/v1.1/screenshots/Selection_333.jpg" width="650" height="450" title="CLI">
+</br>
+
+Current version of clTerm includes only one default command 'term' with three flags '--list', '--info' and '--help'
+</br>
+
+<pre>
+term --list, -l : Prints the list of commands added by user.
+term --info, -i : Prints clTerm version and info.
+term --help, -h : Prints utlity help instructions.
+</pre>
+</br>
+
+**term --help** 
+</br>
+<img src="https://github.com/adimalla/clTerm/blob/v1.1/screenshots/Selection_329.jpg" width="650" height="450" title="CLI">
+</br>
+
 
 
 
