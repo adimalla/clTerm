@@ -63,9 +63,14 @@ puTTY terminal is recommended for application development and testing with this 
                               user commands along with exception handling functions.
 </pre>
 
+</br>
+
 ##### API Initialization and Configuration :-
 
-1. Link console API operations structure with function wrappers. It is initilaized by linking the user or vendor provided serial API functions to the function pointers present in the structure below. This can be done by creating simple wrapper functions to match the parameters and return type of the functions. Shown below.
+1. Link console API operations structure with function wrappers.
+It is initilaized by linking the user or vendor provided serial API functions to the function pointers present in the structure below. This can be done by creating simple wrapper functions to match the parameters and return type of the functions. Shown below.
+
+</br>
 
 ~~~~
 /* Call back functions  */
@@ -79,7 +84,6 @@ typedef struct _console_operations
 
 }console_ops_t;
 ~~~~
-
 </br>
 
 `uint8_t (*open)(uint32_t baudrate);` </br>
@@ -94,7 +98,6 @@ call.
 `char(*read_char)(void);` </br>
 Reads character / byte data from serial interface, link user or vendor function which performs the same operation to this,
 call.
-
 </br>
 
 **Create Wrapper Functions :-**
@@ -137,7 +140,6 @@ char my_read_char(void)
 }
 
 ~~~~
-
 </br>
 
 **Link Wrapper functions to API operations structure :-**
@@ -154,15 +156,13 @@ console_ops_t serial_ops =
 
 </br>
 
-<pre>
 2. Console handle structure:
-   Call console initialization function and pass reference to API operations object created above. 
-   Choose static or dynamic allocation (if heap region configured).if static allocation is selected, 
-   then input buffer(serial buffer) size is taken from cl_term_config.h defines
+Call console initialization function and pass reference to API operations object created above. Choose static or dynamic allocation (if heap region configured).if static allocation is selected, then input buffer(serial buffer) size is taken from cl_term_config.h defines.
    
-   <i>Caution!: Static allocation only creates one instance per application, more than 1 instance,
-                will be over written.</i>
-</pre>
+<i>Caution!: Static allocation only creates one instance per application, more than 1 instance, will be over written.</i>
+
+</br>
+
 ~~~~~
 Example: (choosing static allocation)
 
@@ -184,13 +184,11 @@ if(!console)
 
 </br>
 
-<pre>
 3. Command table structure and adding user defined functions
-   clTerm utility provides user to add custom commands which are maintained in console,
-   command table structure.Create command_table object though create_commad_list(...) API,
-   it takes console handle object as parameter and table size.if console object is statically, 
-   allocated then table size value is redundant and will use size value from cl_term_config.h.
-</pre>
+clTerm utility provides user to add custom commands which are maintained in console command table structure.Create command_table object though create_commad_list(...) API it takes console handle object as parameter and table size.
+if console object is statically allocated then table size value is redundant and will use size value from cl_term_config.h.
+
+</br>
 
 ~~~~~
 /* Command List Table */
