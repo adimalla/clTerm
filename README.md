@@ -222,7 +222,7 @@ if there are no previous exceptions with command table API functions console_beg
 
 </br>
 
-**Call Console API functions **
+**Call Console API functions**
 ~~~~~
 Example:
 
