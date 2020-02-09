@@ -1,7 +1,7 @@
 
 # clTerm
 
-clTerm version 1.0 API based protable terminal utility.
+clTerm, API based protable serial terminal utility.
 
 ![Version:1.0](https://img.shields.io/badge/Version-1.0-green)
 ![In Development](https://img.shields.io/badge/Status-In%20Development-orange.svg)
