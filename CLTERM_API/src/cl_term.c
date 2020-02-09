@@ -57,7 +57,7 @@
 /******************************************************************************/
 
 
-
+/* ASCII values used by get_string function */
 typedef enum console_command
 {
     BACKSPACE         = 8,
@@ -114,8 +114,8 @@ static char *api_strtok_r (char *s, const char *delim, char **save_ptr)
 
 
 
-/************************* Console private functions******************************/
 
+/************************* Console private functions******************************/
 
 
 /**************************************************************
