@@ -117,6 +117,14 @@ static char *api_strtok_r (char *s, const char *delim, char **save_ptr)
 /************************* Console private functions******************************/
 
 
+
+/**************************************************************
+ * @brief  Static function to search for default commands
+ * @param  *console       : reference to console handle
+ * @param  *command_table : reference to command list table
+ * @retval int8_t         : Success = 0, command not found
+ *                          Success = 1, command found
+ ***************************************************************/
 static int8_t search_command(command_table_t *command_table, char command_name[])
 {
     int8_t func_retval = 0;
@@ -144,6 +152,16 @@ static int8_t search_command(command_table_t *command_table, char command_name[]
 
 
 
+
+/***********************************************************
+ * @brief  Static function to search for default commands
+ * @param  *console       : reference to console handle
+ * @param  *command_table : reference to command list table
+ * @param  arg_count      : argument count
+ * @param  **command_argv : argument variables
+ * @retval uint8_t        : Success = 0, command not found
+ *                                  = 1, command found
+ ***********************************************************/
 static uint8_t search_default_commands(cl_term_t *console, command_table_t *command_list, uint8_t arg_count, char **command_argv)
 {
 

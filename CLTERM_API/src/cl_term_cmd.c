@@ -367,5 +367,3 @@ uint8_t terminal_commands(cl_term_t *console, command_table_t *command_list, int
 
 
 
-
-
