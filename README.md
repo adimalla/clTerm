@@ -45,5 +45,6 @@ puTTY terminal is recommended for application development and testing with this 
 
 
 ## Contributors and Maintainers
-Aditya Mall  (UTA MSEE)
-email: aditya.mall1990@gmail.com
+Aditya Mall (UTA MSEE)
+</br>
+email: aditya.mall1990@gmail.com.
