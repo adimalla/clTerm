@@ -143,6 +143,8 @@ char my_read_char(void)
 
 ~~~~
 
+</br>
+
 **Link Wrapper functions to API operations structure :-**
 ~~~~~
 console_ops_t serial_ops =
@@ -154,6 +156,8 @@ console_ops_t serial_ops =
 
 };
 ~~~~~
+
+</br>
 
 <pre>
 2. Console handle structure:
@@ -176,12 +180,14 @@ char *buffer[40] = {0};
 /* Initialize serial handle */
 cl_term_t *console;
 
-console = console_open(&your_serial_operations, BAUDRATE, buffer, CONSOLE_STATIC);
+console = console_open(&serial_ops, BAUDRATE, buffer, CONSOLE_STATIC);
 
 if(!console)
   assert(error);
 
 ~~~~~
+
+</br>
 
 <pre>
 3. Command table structure and adding user defined functions
@@ -201,6 +207,8 @@ typedef struct _command_table
 
 }command_table_t;
 ~~~~~
+
+</br>
 
 **Create Command Table List**
 ~~~~~
