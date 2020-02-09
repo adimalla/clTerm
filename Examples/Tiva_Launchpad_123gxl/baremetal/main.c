@@ -6,8 +6,14 @@
  * @author  Aditya Mall,
  * @brief
  *
- *  Info    Test application for testing clTerm serial terminal utility
+ *  Info    Application for testing clTerm serial terminal utility on,
  *          tiva launchpad 123gxl using bare-metal code.
+ *
+ *  Note
+ *          Bare-metal functions provide by Dr.Jason Losh, The University of,
+ *          Texas at Arlington as a part of project assignments in his courses,
+ *          which is used here to demonstrate the portability of the API,
+ *          to link with external functions.
  *
  ******************************************************************************
  * @attention
@@ -89,6 +95,16 @@
 /*                   Bare-metal Function Implementations                      */
 /*                                                                            */
 /******************************************************************************/
+
+
+
+/*******************************************************************************
+ * Note:-
+ *  Bare-metal functions provide by Dr.Jason Losh, The University of Texas at,
+ *  Arlington as a part of project assignments in his courses, which is used here,
+ *  to demonstrate the portability of the API to link with external functions.
+ ******************************************************************************/
+
 
 
 //System clock and GPIO F for on-board led and button intilaization
@@ -368,14 +384,14 @@ cl_term_t *myConsole;
  *
  *  int yourCommand1(int agrc, char **argv)
  *  {
- *      //do something usefull.
+ *      //do something useful.
  *
  *      return 0;
  *  }
  *
  *  int yourCommand2(int agrc, char **argv)
  *  {
- *      //do something usefull again.
+ *      //do something useful again.
  *
  *      return 0;
  *  }
@@ -383,6 +399,11 @@ cl_term_t *myConsole;
  *  add_command(command_list, "command1", yourCommand1);
  *
  *  add_command(command_list, "command2", yourCommand2);
+ *
+ *  User input:-
+ *
+ *  command2 arg1 agr2
+ *
  *
  ******************************************************************************/
 
@@ -454,7 +475,7 @@ int myCommand1(int argc, char **argv)
 
 /*
  * Print the list of all arguments added by the user.
- * Uses print api provided by clTerm utlity.
+ * Uses print API provided by clTerm utility.
  * API only works for external function if console,
  * object is global.
  */
@@ -479,7 +500,7 @@ int myCommand2(int argc, char **argv)
 
 /******************************************************************************/
 /*                                                                            */
-/*                 Starting the console and executing commands.                */
+/*                 Starting the console and executing commands.               */
 /*                                                                            */
 /******************************************************************************/
 
@@ -517,7 +538,57 @@ int myCommand2(int argc, char **argv)
  *     execution of console_begin(..) function otherwise exception is generated.
  *
  *
+ *  Example:
+ *
+ *     console_exec_command(console, command_list, buffer);
+ *
  ******************************************************************************/
+
+
+
+
+/******************************************************************************/
+/*                                                                            */
+/*                        Exception handling                                  */
+/*                                                                            */
+/******************************************************************************/
+
+/*****************************************************************************
+ *
+ *  Info:-
+ *      Exception handling functions are provided to throw and catch,
+ *      exceptions produced by the console APIs, Exception handling,
+ *      functions are dependent on console handle.
+ *
+ *      Console APIs throw exceptions internally to the console handle,
+ *      which can be caught by the catch_exception(...) function or viewed as,
+ *      symbols in a live debug view.
+ *
+ *      > throw_exception(...), console handle object and exception type as,
+ *        parameters.
+ *
+ *      List of exceptions values can be viewed in cl_term.h file.
+ *
+ *      > catch_exception(...), console handle object and exception state as,
+ *        parameters.
+ *
+ *        if exception state = EXCEPTION_HOLD_STATE, then catch exception,
+ *        function will block the state of the program and report the,
+ *        exception to the terminal.  *
+ *
+ *  Example:-
+ *
+ *      int8_t exception;
+ *
+ *      exception = add_command(...)
+ *
+ *      throw_exception(console, (console_exception_t)exception);
+ *
+ *      catch_exception(console, EXCEPTION_HOLD_STATE);
+ *
+ *****************************************************************************/
+
+
 
 
 /**
@@ -532,7 +603,7 @@ int main(void)
     char serial_buffer[MAX_INPUT_SIZE] = {0};
 
     command_table_t *command_list;
-
+    int8_t           exception;
 
     /*Initialize peripheral hardware (CLOCK and board led GPIO)*/
     initHw();
@@ -547,10 +618,11 @@ int main(void)
 
 
     /*Add user commands*/
-    add_command(command_list, "red", myCommand1);
+    exception  = add_command(command_list, "red", myCommand1);
 
-    add_command(command_list, "print", myCommand2);
+    exception |= add_command(command_list, "print", myCommand2);
 
+    throw_exception(myConsole, (console_exceptions_t)exception);
 
 
     /*Start console*/
@@ -566,6 +638,9 @@ int main(void)
 
         /* Execute user commands */
         console_exec_command(myConsole, command_list, serial_buffer);
+
+        /* catch exception */
+        catch_exception(myConsole, EXCEPTION_HOLD_STATE);
 
     }
 
