@@ -159,6 +159,17 @@ char getcUart0(void)
 
 
 
+// Blocking function that writes a string when the UART buffer is not full
+void putsUart0(const char* str)
+{
+    uint8_t i;
+
+    for (i = 0; i < uSTRLEN(str); i++)
+        putcUart0(str[i]);
+}
+
+
+
 /******************************************************************************/
 /*                                                                            */
 /*                  clTerm console handle configurations                      */
@@ -170,8 +181,8 @@ char getcUart0(void)
  *
  * Info: API operations structure.
  *
- * typedef struct _console_operations
- * {
+ *  typedef struct _console_operations
+ *  {
  *   // Initialize serial hardware, (must return 0 for error, 1 for success)
  *   uint8_t (*open)(uint32_t baudrate);
  *
@@ -186,7 +197,7 @@ char getcUart0(void)
  *  }console_ops_t;
  *
  *
- *  Initialization:-
+ * Initialization:-
  *
  *  API initializes with 'console_open(...)' call which uses,
  *  (*open)(uint32_t baudrate) as call back function. and API operations,
@@ -241,6 +252,8 @@ char getcUart0(void)
  *  3) Call console initialization function and pass reference to API,
  *     operations object created above. Choose static or dynamic allocation,
  *     (if heap region configured).
+ *     if static allocation is selected then input buffer (serial buffer),
+ *     size is taken from cl_term_config.h
  *
  *
  *  Example: (choosing static allocation)
@@ -272,10 +285,10 @@ char getcUart0(void)
 // serial baud-rate internally.
 uint8_t myUartOpen(uint32_t baud_rate)
 {
-     init_uart0();
+    init_uart0();
 
-     //return 1 for success, here
-     return 1;
+    //return 1 for success, here
+    return 1;
 }
 
 //Accordingly, creating wrapper function of serial read and write to match
@@ -309,8 +322,96 @@ cl_term_t *myConsole;
 /******************************************************************************/
 /*                                                                            */
 /*                  clTerm command table configurations                       */
+/*                      and Starting the Console.                             */
 /*                                                                            */
 /******************************************************************************/
+
+
+/******************************************************************************
+ *
+ * Info:-
+ *  clTerm utility provides user to add custom commands which are maintained in,
+ *  console command table structure.
+ *
+ *  typedef struct _command_table
+ *  {
+ *   uint8_t command_table_size;
+ *   char    command_name[CMD_NAME_SIZE];
+ *   int     (*func)(int argc, char **argv);
+ *
+ *  } command_table_t;
+ *
+ * Initialization:-
+ *
+ *  1) Create command_table object though create_commad_list(...) API,
+ *     it takes console handle object as parameter and table size.
+ *     if console object is statically allocated then table size value,
+ *     is redundant and will use size value from cl_term_config.h.
+ *
+ *  Example:
+ *
+ *  command_table_t *command_list;
+ *
+ *  command_list = create_command_list(console, MAX_TABLE_SIZE);
+ *
+ *  if(!command_list)
+ *  {
+ *    //assert error
+ *  }
+ *
+ *
+ *  2) Adding user defined commands to command table through add_command(...),
+ *     with C command line arguments. Takes command_table object as parameter,
+ *     and command name and address of the command function to be called.
+ *
+ *  Example:
+ *
+ *  int yourCommand1(int agrc, char **argv)
+ *  {
+ *      //do something usefull.
+ *
+ *      return 0;
+ *  }
+ *
+ *  int yourCommand2(int agrc, char **argv)
+ *  {
+ *      //do something usefull again.
+ *
+ *      return 0;
+ *  }
+ *
+ *  add_command(command_list, "command1", yourCommand1);
+ *
+ *  add_command(command_list, "command2", yourCommand2);
+ *
+ *
+ *  3) Start console by calling the console_begin(..) function.
+ *     it takes console handle object and command table object as parameters.
+ *     if there are no previous exceptions with command table API functions,
+ *     console_begin executes successfully, or returns exception to console,
+ *     handle which can be handle by catch_exception(...) function.
+ *
+ *   Example:
+ *
+ *   console_begin(console, command_list);
+ *
+ *
+ ******************************************************************************/
+
+
+
+/******************************************************************************/
+/*                                                                            */
+/*                       User defined commands                                */
+/*                                                                            */
+/******************************************************************************/
+
+
+int myCommand1(int argc, char **argv)
+{
+
+
+}
 
 
 
