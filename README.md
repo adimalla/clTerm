@@ -1,8 +1,12 @@
+
 # clTerm
+
+clTerm version 1.0 API based protable terminal utility.
 
 ![Version:1.0](https://img.shields.io/badge/Version-1.0-green)
 ![In Development](https://img.shields.io/badge/Status-In%20Development-orange.svg)
 ![IDE:CCStudio](https://img.shields.io/badge/IDE-CCStudio-red)
+![Protocol:UART](https://img.shields.io/badge/Protocol-UART%20serial-blue)
 
 ![License:MIT](https://img.shields.io/github/license/adimalla/MQTT-3.1-C?label=License)
 <br/>
