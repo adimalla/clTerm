@@ -214,6 +214,37 @@ if(!commmand_list)
   assert(error);
 ~~~~~
 
+</br>
+
+4. The console API commands are executed by calling the console_begin(...) followed by calling the console_get_string(...) to get user input and finally calling the console_exec_command(...) to execute the correct entered by the user.
+Console_begin(..) function takes console handle object and command table object as parameters.
+if there are no previous exceptions with command table API functions console_begin executes successfully, or returns exception to console handle which can be handle by catch_exception(...) function.
+
+</br>
+
+**Call Console API functions **
+~~~~~
+Example:
+
+console_begin(console, command_list);
+
+
+/* Call console_get_string(...), takes two parameters, object to console,
+ * handle and max input buffer size.
+ */
+console_get_string(console, MAX_INPUT_SIZE);
+
+
+/* Call console_exec_command(...), takes console object, command table object,
+ * and user input buffer as parameters. This call is dependent upon successful,
+ * execution of console_begin(..) function otherwise exception is generated.
+ */
+console_exec_command(console, command_list, buffer);
+
+~~~~~
+
+</br>
+
 ## Contributors and Maintainers
 Aditya Mall (UTA MSEE)
 </br>
