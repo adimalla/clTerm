@@ -28,5 +28,7 @@ clTerm is an easy to port API based serial terminal utility which allows,users t
 ## Porting and Instalation
 Clone repository to the destination directory, include CLTERM_API into include files for the IDE, exclude or remove Examples test code if building a new application.
 
+puTTY terminal is recommended for application development and testing with this utility.
+
 ## Contributors and Maintainers
 Aditya Mall  (UTA MSEE)
