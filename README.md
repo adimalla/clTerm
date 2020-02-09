@@ -107,10 +107,10 @@ Example : for uint8_t (*open)(uint32_t baud_rate)
 
 uint8_t simple_open(uint32_t baud_rate)
 {     
-  // User;s own serial initialization function
+  /* User's own serial initialization function */
   your_uart0_init(void);
   
-  // Must return 1 to indicate success.
+  /* Must return 1 to indicate success */
   return 1;
 }
 
@@ -118,10 +118,10 @@ OR
 
 uint8_t serial_open(uint32_t baud_rate)
 {
-  // User's own serial initialization function
+  /* User's own serial initialization function */
   your_uart0_init(GPIOA, UART0, baud_rate);     
   
-  // Must return 1 to indicate success.
+  /* Must return 1 to indicate success */
   return 1;
 }
 
