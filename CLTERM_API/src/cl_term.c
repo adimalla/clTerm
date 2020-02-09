@@ -487,6 +487,9 @@ int8_t console_begin(cl_term_t *console, command_table_t *command_table)
         /* Set begin status */
         console->status.begin = 1;
 
+        /* Set version status */
+        console->version = CLTERM_VERSION;
+
         /* Clear Console Screen */
         console_print(console, CONSOLE_CLEAR_SCREEN);
 
