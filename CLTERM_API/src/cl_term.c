@@ -500,8 +500,6 @@ int8_t console_begin(cl_term_t *console, command_table_t *command_table)
 
         console_print(console, "\n");
 
-
-
         func_retval = 0;
     }
 
