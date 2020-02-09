@@ -305,10 +305,12 @@ throw_exception(myConsole, (console_exceptions_t)exception);
 
 catch_exception(myConsole, EXCEPTION_HOLD_STATE);
 ~~~~~
-
 </br>
 
-## Contributions
+## Contact
+For further queries please contact :- </br>
+
 Aditya Mall (UTA MSEE)
 </br>
+
 email: aditya.mall1990@gmail.com.
