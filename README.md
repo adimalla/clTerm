@@ -54,7 +54,7 @@ puTTY terminal is recommended for application development and testing with this 
 <pre>
 1. API operations structure : Used for linking external basic serial operations to the API.
 
-2. Console handle strcuture : Main handle object used by all API methods / functions.
+2. Console handle structure : Main handle object used by all API methods / functions.
 
 3. Command table structure  : Stores the list of user defined commands, used for 
                               accessing the commands
@@ -67,9 +67,9 @@ puTTY terminal is recommended for application development and testing with this 
 
 <pre>
 1. Link console API operations structure with function wrappers.
-   It is initilaized by linking the user or vendor provided serial API functions to the 
-   function pointers, present in the structure below. This can be done by creating simple 
-   wrapper functions to match the, parameters and return type of the functions. Shown below.
+   It is initilaized by linking the user or vendor provided serial API functions to the function, 
+   pointers present in the structure below. This can be done by creating simple wrapper functions, 
+   to match the parameters and return type of the functions. Shown below.
 </pre>
 
 ~~~~
@@ -85,6 +85,8 @@ typedef struct _console_operations
 }console_ops_t;
 ~~~~
 
+</br>
+
 `uint8_t (*open)(uint32_t baudrate);` </br>
 Initialize serial hardware, (must return 0 for error, 1 for success), link serial init function with this call,
 which can get baudrate or serial speed as parameter or empty/dummy baudrate value if user serial init configures,
@@ -97,6 +99,8 @@ call.
 `char(*read_char)(void);` </br>
 Reads character / byte data from serial interface, link user or vendor function which performs the same operation to this,
 call.
+
+</br>
 
 **Create Wrapper Functions :-**
 
@@ -151,8 +155,64 @@ console_ops_t serial_ops =
 };
 ~~~~~
 
+<pre>
+2. Console handle structure:
+   Call console initialization function and pass reference to API operations object created above. 
+   Choose static or dynamic allocation (if heap region configured).if static allocation is selected, 
+   then input buffer(serial buffer) size is taken from cl_term_config.h defines
+   
+   <i>Caution!: Static allocation only creates one instance per application, more than 1 instance,
+                will be over written.</i>
+</pre>
+~~~~~
+Example: (choosing static allocation)
 
+/* Define baud-rate / serial speed */
+#define BAUDRATE 115200
 
+/* Initialize serial buffer */
+char *buffer[40] = {0};
+
+/* Initialize serial handle */
+cl_term_t *console;
+
+console = console_open(&your_serial_operations, BAUDRATE, buffer, CONSOLE_STATIC);
+
+if(!console)
+  assert(error);
+
+~~~~~
+
+<pre>
+3. Command table structure and adding user defined functions
+   clTerm utility provides user to add custom commands which are maintained in console,
+   command table structure.Create command_table object though create_commad_list(...) API,
+   it takes console handle object as parameter and table size.if console object is statically, 
+   allocated then table size value is redundant and will use size value from cl_term_config.h.
+</pre>
+
+~~~~~
+/* Command List Table */
+typedef struct _command_table
+{
+    uint8_t command_table_size;              /*!< Table Size              */
+    char    command_name[CMD_NAME_SIZE];     /*!< Command Name            */
+    int     (*func)(int argc, char **argv);  /*!< Linked function pointer */
+
+}command_table_t;
+~~~~~
+
+**Create Command Table List**
+~~~~~
+Example :-
+
+command_table_t *command_list;
+
+command_list = create_command_list(console, MAX_TABLE_SIZE);
+
+if(!commmand_list)
+  assert(error);
+~~~~~
 
 ## Contributors and Maintainers
 Aditya Mall (UTA MSEE)
