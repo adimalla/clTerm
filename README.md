@@ -184,8 +184,7 @@ if(!console)
 
 </br>
 
-3. Command table structure and adding user defined functions
-clTerm utility provides user to add custom commands which are maintained in console command table structure.Create command_table object though create_commad_list(...) API it takes console handle object as parameter and table size.
+3.clTerm utility provides user to add custom commands which are maintained in console command table structure. Create command_table object though create_commad_list(...) API it takes console handle object as parameter and table size.
 if console object is statically allocated then table size value is redundant and will use size value from cl_term_config.h.
 
 </br>
