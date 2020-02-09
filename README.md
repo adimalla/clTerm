@@ -18,7 +18,7 @@
 <br/>
 
 ## Description
-clTerm is an easy to port API based serial terminal utility which allows,users to add standard C like "command line arguments" based functions, or commands to their application. This utility is implemented via callback, which allows portability across any micro-controller that supports serial protocols.
+**_clTerm_** is an easy to port API based serial terminal utility which allows,users to add standard C like "command line arguments" based functions, or commands to their application. This utility is implemented via callback, which allows portability across any micro-controller that supports serial protocols.
 
 Goal of this utlity to give users a framework to add commands to their application without modifying every section of the code responsible for branching to user defined functions specially when there is a need of adding more functionalities, therefore making the firmware very modular. At the same tim eth utlity focuses on portablity, it is not dependednt on memory mapped peripherals or modules needed for accessing serial protocols. The user defined or vendor defined peripheral APIs can simply be linked to this utlity though API operations structure provided in this ulity, which consists of minimal open, byte operations like (read_char and print_char) and close.
 
