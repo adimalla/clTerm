@@ -286,7 +286,7 @@ the state of the program and report the exception to the terminal.
 </pre>
 
 </br>
-**Call Exception Handling functions **
+**Call Exception Handling functions**
 ~~~~~
 int8_t exception;
 
@@ -297,7 +297,7 @@ throw_exception(myConsole, (console_exceptions_t)exception);
 catch_exception(myConsole, EXCEPTION_HOLD_STATE);
 
 ~~~~~
-
+</br>
 
 ## Contributors and Maintainers
 Aditya Mall (UTA MSEE)
