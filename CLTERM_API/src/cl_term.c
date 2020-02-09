@@ -611,7 +611,12 @@ int8_t console_get_string(cl_term_t *console, uint16_t input_length)
 
                     console_print(console, "\n");
                     console_print(console, "\n");
-                    console_print(console, "ERROR: Input Length Exceeded \n");
+
+                    console_print(console, TERM_RED);
+                    console_print(console, "Error: ");
+                    console_print(console, ATTRIBUTES_OFF);
+                    console_print(console, "Input Length Exceeded \n");
+
                     console_print(console, "\n");
 
                     break;
@@ -754,14 +759,21 @@ int8_t console_exec_command(cl_term_t *console, command_table_t *command_list ,c
             {
                 /* Print Command Not Found */
                 console_print(console, "\n");
-                console_print(console, "Error: Command Not Found \n");
+
+                console_print(console, TERM_RED);
+                console_print(console, "Error: ");
+                console_print(console, ATTRIBUTES_OFF);
+
+                console_print(console, "Command Not Found \n");
                 console_print(console, "\n");
 
                 console_print(console, "Please check if command is added to the user command list \n");
                 console_print(console, "\n");
 
+                console_print(console, BOLD_ON);
                 console_print(console, "Use 'term --list' to list user commands or,\n"
                                        "    'term --help' for help options.        \n");
+                console_print(console, ATTRIBUTES_OFF);
 
                 console_print(console, "\n");
 

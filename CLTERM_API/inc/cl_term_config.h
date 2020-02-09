@@ -69,11 +69,17 @@
 
 
 /* VT100 compatible terminal defines */
+
+/* Attributes */
 #define CONSOLE_CLEAR_SCREEN  "\033[2J\033[H"
 #define CONSOLE_LOCAL_ECHO    "\033[12l"
 #define CONSOLE_EOL           "\r\n"
 #define BOLD_ON               "\033[;1m"
 #define ATTRIBUTES_OFF        "\033[0m"
+
+/* Text Colors */
+#define TERM_RED "\033[31;1m"
+
 
 
 #endif /* CL_TERM_CONFIG_H_ */

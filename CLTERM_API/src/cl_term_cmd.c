@@ -289,7 +289,10 @@ uint8_t terminal_commands(cl_term_t *console, command_table_t *command_list, int
         /* Check for number of arguments */
         if(count < 2)
         {
-            console_print(console,"Error: No argument given.\n");
+            console_print(console, TERM_RED);
+            console_print(console, "Error: ");
+            console_print(console, ATTRIBUTES_OFF);
+            console_print(console, "No argument given.\n");
 
             console_print(console,"\n");
 
@@ -299,7 +302,10 @@ uint8_t terminal_commands(cl_term_t *console, command_table_t *command_list, int
         }
         else if(count > 2)
         {
-            console_print(console,"Error: Commands expects only 1 argument.\n");
+            console_print(console, TERM_RED);
+            console_print(console, "Error: ");
+            console_print(console, ATTRIBUTES_OFF);
+            console_print(console, "Commands expects only 1 argument.\n");
 
             console_print(console,"\n");
 
@@ -334,7 +340,10 @@ uint8_t terminal_commands(cl_term_t *console, command_table_t *command_list, int
             {
                 /* Report wrong argument entered to terminal */
 
-                console_print(console,"Error: Wrong argument entered.\n");
+                console_print(console, TERM_RED);
+                console_print(console, "Error: ");
+                console_print(console, ATTRIBUTES_OFF);
+                console_print(console, "Wrong argument entered.\n");
 
                 console_print(console,"\n");
 
