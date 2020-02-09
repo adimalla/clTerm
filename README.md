@@ -336,7 +336,6 @@ Current version of clTerm includes only one default command 'term' with three fl
 </br>
 
 **'term --help'** 
-
 </br>
 
 <img src="https://github.com/adimalla/clTerm/blob/v1.1/screenshots/Selection_329.jpg" width="650" height="450" title="CLI">
