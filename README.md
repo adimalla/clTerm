@@ -23,6 +23,17 @@ clTerm is an easy to port API based serial terminal utility which allows,users t
 
 ## Features
 
+###### Current:-
+* Read and Write API for reading from and writing to serial terminal
+* Operations functions to link external character(byte) read and write functions to API, making it portable.
+* Allowing user to add command line arrgument based commands to their applications, upto 255 commands.
+* Clean API and exception handler for easy debugging and error reporting.
+* Both Static and Dynamic allocation of API objects as per availaiblity of features.
+
+###### Future Version:-
+* Interrupt support.
+* Linked List based command table for efficient resource management.
+* String operation based utilities.
 
 
 ## Porting and Instalation
@@ -30,5 +41,9 @@ Clone repository to the destination directory, include CLTERM_API into include f
 
 puTTY terminal is recommended for application development and testing with this utility.
 
+## Usage
+
+
 ## Contributors and Maintainers
 Aditya Mall  (UTA MSEE)
+email: aditya.mall1990@gmail.com
