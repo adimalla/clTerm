@@ -317,6 +317,12 @@ catch_exception(myConsole, EXCEPTION_HOLD_STATE);
 ~~~~~
 </br>
 
+## Utility Default Commands and Testing
+After successfull build and run of application, the followig default screen will appear with '$' prompt.
+
+
+
+
 ## Contact
 For further queries please contact :- </br>
 
