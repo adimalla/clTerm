@@ -18,21 +18,22 @@
 <br/>
 
 ## Description
-**_clTerm_** is an easy to port API based serial terminal utility which allows,users to add standard C like "command line arguments" based functions, or commands to their application. This utility is implemented via callback, which allows portability across any micro-controller that supports serial protocols.
+**_clTerm_** is an easy to port minimal API based serial terminal utility which adds a 'shell' like interface to the application and allows users to add standard C like "command line arguments" based functions, or commands to their application. This utility is implemented via callbacks, which allows portability across any micro-controller that supports serial protocols.
 
-Goal of this utlity to give users a framework to add commands to their application without modifying every section of the code responsible for branching to user defined functions specially when there is a need of adding more functionalities, therefore making the firmware very modular. At the same tim eth utlity focuses on portablity, it is not dependednt on memory mapped peripherals or modules needed for accessing serial protocols. The user defined or vendor defined peripheral APIs can simply be linked to this utlity though API operations structure provided in this ulity, which consists of minimal open, byte operations like (read_char and print_char) and close.
+Goal of this utlity to give users a shell like interface and a framework to add commands to their application without modifying every section of the code that is responsible for branching to user defined functions specially when there is a need of adding more functions, therefore making the application very modular. At the same time the utlity focuses on portablity, it is not dependednt on memory mapped peripherals or modules needed for accessing serial protocols. The user defined or vendor defined peripheral APIs can simply be linked to this utlity though the provided API operations structure, which consists of minimal operations like open, byte operations like (read_char and print_char) and close.
 
-Additionally it is a good academic excercise for leanring how to add command line 'shell' like terminal to application, and learning string operations, linked lists and callbacks.
+Additionally it is a good academic excercise for learning how to add command line 'shell' like terminal to applications, learning string operations, linked lists and callbacks.
 <br/>
 
 ## Features
 
 ##### Current:-
-* Read and Write API for reading from and writing to serial terminal
-* Operations functions to link external character(byte) read and write functions to API, making it portable.
-* Allowing user to add command line arrgument based commands to their applications, upto 255 commands.
+* Command line arrgument based functions can be added to the applications, upto 255 commands.
+* Read and Write API for, reading from and writing to serial terminal.
+* Portable API through call back operations.
 * Clean API and exception handler for easy debugging and error reporting.
-* Both Static and Dynamic allocation of API objects as per availaiblity of features.
+* Both Static and Dynamic allocation of API objects as per availaiblity of memory regions.
+* Minimal code space, under 1000 lines code.
 
 ##### Future Version:-
 * Interrupt support.
@@ -42,7 +43,11 @@ Additionally it is a good academic excercise for leanring how to add command lin
 <br/>
 
 ## Porting and Instalation
-Clone repository to the destination directory, include CLTERM_API into include files for the IDE, exclude or remove Examples test code if building a new application.
+**For New Application** </br>
+Clone repository to the destination directory, include CLTERM_API into include files for the IDE, exclude or remove Examples test code.
+
+**Example Test Code** </br>
+Clone repository to the destination directory, include CLTERM_API and required board examples into the project directory.
 
 puTTY terminal is recommended for application development and testing with this utility.
 <br/>
@@ -57,7 +62,7 @@ puTTY terminal is recommended for application development and testing with this 
 2. Console handle structure : Main handle object used by all API methods / functions.
 
 3. Command table structure  : Stores the list of user defined commands, used for 
-                              accessing the commands
+                              accessing the commands.
 
 4. API methods/functions    : API functions which are responsible for getting user input, executing 
                               user commands along with exception handling functions.
@@ -68,7 +73,7 @@ puTTY terminal is recommended for application development and testing with this 
 ##### API Initialization and Configuration :-
 
 1. Link console API operations structure with function wrappers.
-It is initilaized by linking the user or vendor provided serial API functions to the function pointers present in the structure below. This can be done by creating simple wrapper functions to match the parameters and return type of the functions. Shown below.
+This is initialized by linking user defined or vendor provided serial API functions to the callback functions present in the API operations structure shown below. Linkning can be done by creating simple wrapper functions to match the parameters and return type of call back functions.
 
 </br>
 
@@ -79,16 +84,17 @@ typedef struct _console_operations
     uint8_t (*open)(uint32_t baudrate);                   
     uint8_t (*print_char)(char data);                     
     char    (*read_char)(void);                           
-    int8_t  (*write)(const char *buffer, int16_t length);  
-    int8_t  (*read)(char *read_buffer, int16_t length);    
+    int8_t  (*write)(const char *buffer, int16_t length);  /* Not used */
+    int8_t  (*read)(char *read_buffer, int16_t length);    /* Not used */
 
 }console_ops_t;
 ~~~~
+
 </br>
 
 `uint8_t (*open)(uint32_t baudrate);` </br>
-Initialize serial hardware, (must return 0 for error, 1 for success), link serial init function with this call,
-which can get baudrate or serial speed as parameter or empty/dummy baudrate value if user serial init configures,
+Initializes serial hardware, (must return 0 for error, 1 for success), link serial init function with this call,
+which expects baudrate or serial speed as parameter or empty/dummy baudrate value if user serial init configures,
 fixed baudrate or speed internally.
 
 `uint8_t (*print_char)(char data);` </br>
@@ -96,7 +102,7 @@ Writes character / byte data to serial ineterface or hardware, link user or vend
 call.
 
 `char(*read_char)(void);` </br>
-Reads character / byte data from serial interface, link user or vendor function which performs the same operation to this,
+Reads character / byte data from serial interface, link user or vendor function ,which performs the same operation, to this,
 call.
 </br>
 
@@ -107,7 +113,8 @@ Example : for uint8_t (*open)(uint32_t baud_rate)
 
 uint8_t simple_open(uint32_t baud_rate)
 {     
-  /* User's own serial initialization function */
+  /* User's serial initialization function */
+  /* Configures baud rate internally */
   your_uart0_init(void);
   
   /* Must return 1 to indicate success */
@@ -118,7 +125,7 @@ OR
 
 uint8_t serial_open(uint32_t baud_rate)
 {
-  /* User's own serial initialization function */
+  /* User's serial initialization function */
   your_uart0_init(GPIOA, UART0, baud_rate);     
   
   /* Must return 1 to indicate success */
@@ -184,7 +191,7 @@ if(!console)
 
 </br>
 
-3. clTerm utility provides user to add custom commands which are maintained in console command table structure. Create command_table object though create_commad_list(...) API it takes console handle object as parameter and table size.
+3. clTerm utility provides user to add custom commands which are maintained in console command table structure. Create command_table object though create_commad_list(...) API which takes console handle object as parameter and table size.
 if console object is statically allocated then table size value is redundant and will use size value from cl_term_config.h.
 
 </br>
@@ -202,7 +209,7 @@ typedef struct _command_table
 
 </br>
 
-**Create Command Table List**
+**Create Command Table List and Add command **
 ~~~~~
 Example :-
 
@@ -227,7 +234,7 @@ int test1(int argc, char **argv)
     return 0;
 }
 
-
+/* Define command table object */
 command_table_t *command_list;
 
 command_list = create_command_list(console, MAX_TABLE_SIZE);
@@ -241,9 +248,9 @@ if(!commmand_list)
 
 </br>
 
-4. The console API commands are executed by calling the console_begin(...) followed by calling the console_get_string(...) to get user input and finally calling the console_exec_command(...) to execute the correct entered by the user.
+4. The console API commands are executed by calling the console_begin(...) followed by calling the console_get_string(...) to get user input and finally calling the console_exec_command(...) to execute the correct command entered by the user.
 Console_begin(..) function takes console handle object and command table object as parameters.
-if there are no previous exceptions with command table API functions console_begin executes successfully, or returns exception to console handle which can be handle by catch_exception(...) function.
+if there are no previous exceptions with command table API functions console_begin executes successfully, or returns exception to console handle which can be handled by catch_exception(...) function.
 
 </br>
 
@@ -270,8 +277,7 @@ console_exec_command(console, command_list, buffer);
 
 </br>
 
-5. Exception handling functions are provided to throw and catch, exceptions produced by the console APIs, Exception, handling functions are dependent on console handle. Console APIs throw exceptions internally to the console handle,
-which can be caught by the catch_exception(...) function or viewed as, symbols in a live debug view.
+5. Exception handling functions are provided to throw and catch exceptions produced by the console API methods. Exception, handling functions are dependent on console handle and throw exceptions internally to the console handle which can be caught by the catch_exception(...) function or viewed as symbols in a live debug view.
 
 </br>
 
@@ -289,6 +295,8 @@ the state of the program and report the exception to the terminal.
 
 **Call Exception Handling functions**
 ~~~~~
+Example :-
+
 int8_t exception;
 
 exception |= add_command(command_list, "test1", test1);
@@ -300,7 +308,7 @@ catch_exception(myConsole, EXCEPTION_HOLD_STATE);
 
 </br>
 
-## Contributors and Maintainers
+## Contributions
 Aditya Mall (UTA MSEE)
 </br>
 email: aditya.mall1990@gmail.com.
