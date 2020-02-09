@@ -936,4 +936,42 @@ console_exceptions_t catch_exception(cl_term_t *console, exception_state_t excep
 
 
 
+/**************************************************************************
+ * @brief  Destructor function to free console and command table object
+ * @param  **console      : reference to address of console handle object
+ * @param  **command_list : reference to address of command table object
+ * @retval uint8_t        : Error: 1, Success = 0,
+ *************************************************************************/
+uint8_t console_delete(cl_term_t **console, command_table_t **command_list)
+{
+
+    uint8_t func_retval = 0;
+
+    uint8_t table_size  = 0;
+
+    if( (*console)->allocation_type == CONSOLE_DYNAMIC)
+    {
+        /* Free command table object */
+        table_size = (*command_list)->command_table_size;
+
+        memset(command_list, 0, (sizeof(command_table_t) + table_size) );
+
+        free(command_list);
+
+        /* Free console object */
+        memset(console, 0, sizeof(cl_term_t));
+
+        free(console);
+
+    }
+    else
+    {
+        func_retval = 1;
+    }
+
+    return func_retval;
+}
+
+
+
 

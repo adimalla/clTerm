@@ -304,4 +304,17 @@ console_exceptions_t catch_exception(cl_term_t *console, exception_state_t excep
 
 
 
+
+/**************************************************************************
+ * @brief  Destructor function to free console and command table object
+ * @param  **console      : reference to address of console handle object
+ * @param  **command_list : reference to address of command table object
+ * @retval uint8_t        : Error: 1, Success = 0,
+ *************************************************************************/
+uint8_t console_delete(cl_term_t **console, command_table_t **command_list);
+
+
+
+
+
 #endif /* CL_TERM_H_ */
