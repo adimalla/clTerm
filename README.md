@@ -1,7 +1,6 @@
 # clTerm
 
 ![Version:1.0](https://img.shields.io/badge/Version-1.0-green)
-
 ![In Development](https://img.shields.io/badge/Status-In%20Development-orange.svg)
 ![IDE:CCStudio](https://img.shields.io/badge/IDE-CCStudio-red)
 
