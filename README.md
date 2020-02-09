@@ -7,7 +7,7 @@
 ![In Development](https://img.shields.io/badge/Status-In%20Development-orange.svg)
 ![IDE:CCStudio](https://img.shields.io/badge/IDE-CCStudio-red)
 ![Protocol:UART](https://img.shields.io/badge/Protocol-UART%20serial-blue)
-![Terminal:Putty](https://img.shields.io/badge/Teminal-Putty-blue)
+![Terminal:Putty](https://img.shields.io/badge/Teminal-puTTY-blue)
 
 
 ![License:MIT](https://img.shields.io/github/license/adimalla/MQTT-3.1-C?label=License)
