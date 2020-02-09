@@ -141,12 +141,22 @@ uint8_t my_print_char(char data)
     return 0;
 }
 
+/* Converting vendor function with write buffer operation */
+
+uint8_t my_print_char(char data)
+{
+    /* Writing byte at a time */
+    uart0_write_buffer(UART0, &data, 1);
+
+    return 0;
+}
+
 char my_read_char(void)
 {
   return getcUart0();
 }
 
-~~~~
+~~~~~
 </br>
 
 **Link Wrapper functions to API operations structure :-**
