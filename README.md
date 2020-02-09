@@ -65,12 +65,7 @@ puTTY terminal is recommended for application development and testing with this 
 
 ##### API Initialization and Configuration :-
 
-<pre>
-1. Link console API operations structure with function wrappers.
-   It is initilaized by linking the user or vendor provided serial API functions to the function, 
-   pointers present in the structure below. This can be done by creating simple wrapper functions, 
-   to match the parameters and return type of the functions. Shown below.
-</pre>
+1. Link console API operations structure with function wrappers. It is initilaized by linking the user or vendor provided serial API functions to the function pointers present in the structure below. This can be done by creating simple wrapper functions to match the parameters and return type of the functions. Shown below.
 
 ~~~~
 /* Call back functions  */
