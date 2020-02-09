@@ -276,7 +276,7 @@ which can be caught by the catch_exception(...) function or viewed as, symbols i
 </br>
 
 <pre>
-throw_exception(...), console handle object and exception type as, arameters.
+throw_exception(...), console handle object and exception type as, parameters.
 
 List of exceptions values can be viewed in cl_term.h file.
 
