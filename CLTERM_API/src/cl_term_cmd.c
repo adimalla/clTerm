@@ -150,7 +150,9 @@ static void term_list(cl_term_t *console, command_table_t *table)
 {
     uint8_t index = 0;
 
-    console_print(console, "Command \n");
+    console_print(console, BOLD_ON);
+    console_print(console, "Command Name \n");
+    console_print(console, ATTRIBUTES_OFF);
 
     for(index = 0; index < table->command_table_size; index++)
     {
@@ -193,6 +195,7 @@ int8_t console_logo(cl_term_t *console)
     }
     else
     {
+        console_print(console, BOLD_ON);
         console_print(console,"\n");
 
         console_print(console, "               88888888888       8888888b.                \n");
@@ -205,7 +208,6 @@ int8_t console_logo(cl_term_t *console)
         console_print(console,"\n");
         console_print(console,"           clTerm, Portable Serial Terminal Utility        \n");
         console_print(console,"\n");
-
     }
 
     return func_retval;
@@ -232,14 +234,16 @@ int8_t logo_header(cl_term_t *console)
     }
     else
     {
-
+        console_print(console, ATTRIBUTES_OFF);
         console_print(console,"---------------------------------------------------------  \n");
 
         console_print(console,"clTerm, version: 1.0 (c)2020, Aditya Mall. \n");
         console_print(console,"License: MIT.                              \n");
         console_print(console,"\n");
 
+        console_print(console, BOLD_ON);
         console_print(console,"Use 'term --help' to see usage. \n");
+        console_print(console, ATTRIBUTES_OFF);
         console_print(console,"\n");
 
         console_print(console,"Visit: github.com/adimalla/clTerm for more details.\n");
@@ -289,7 +293,9 @@ uint8_t terminal_commands(cl_term_t *console, command_table_t *command_list, int
 
             console_print(console,"\n");
 
+            console_print(console, BOLD_ON);
             console_print(console,"Use 'term --help' to see usage.\n");
+            console_print(console, ATTRIBUTES_OFF);
         }
         else if(count > 2)
         {
@@ -297,7 +303,9 @@ uint8_t terminal_commands(cl_term_t *console, command_table_t *command_list, int
 
             console_print(console,"\n");
 
+            console_print(console, BOLD_ON);
             console_print(console,"Use 'term --help' to see usage.\n");
+            console_print(console, ATTRIBUTES_OFF);
         }
         else
         {
@@ -326,11 +334,13 @@ uint8_t terminal_commands(cl_term_t *console, command_table_t *command_list, int
             {
                 /* Report wrong argument entered to terminal */
 
-                console_print(console,"Wrong argument entered.\n");
+                console_print(console,"Error: Wrong argument entered.\n");
 
                 console_print(console,"\n");
 
+                console_print(console, BOLD_ON);
                 console_print(console,"Use 'term --help' to see usage.\n");
+                console_print(console, ATTRIBUTES_OFF);
 
             }
 

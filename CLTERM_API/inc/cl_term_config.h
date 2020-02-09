@@ -72,8 +72,8 @@
 #define CONSOLE_CLEAR_SCREEN  "\033[2J\033[H"
 #define CONSOLE_LOCAL_ECHO    "\033[12l"
 #define CONSOLE_EOL           "\r\n"
-
-
+#define BOLD_ON               "\033[;1m"
+#define ATTRIBUTES_OFF        "\033[0m"
 
 
 #endif /* CL_TERM_CONFIG_H_ */
