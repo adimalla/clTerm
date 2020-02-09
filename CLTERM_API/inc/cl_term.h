@@ -168,13 +168,12 @@ typedef struct _cl_term
 
 
 
-
 /* Command List Table */
 typedef struct _command_table
 {
-    uint8_t command_table_size;                  /*!< Table Size              */
-    char    command_name[CMD_NAME_SIZE];         /*!< Command Name            */
-    int (*func)(int argc, char **argv);  /*!< Linked function pointer */
+    uint8_t command_table_size;              /*!< Table Size              */
+    char    command_name[CMD_NAME_SIZE];     /*!< Command Name            */
+    int     (*func)(int argc, char **argv);  /*!< Linked function pointer */
 
 }command_table_t;
 
