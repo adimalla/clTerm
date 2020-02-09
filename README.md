@@ -329,14 +329,16 @@ Current version of clTerm includes only one default command 'term' with three fl
 </br>
 
 <pre>
-term --list, -l : Prints the list of commands added by user.
-term --info, -i : Prints clTerm version and info.
-term --help, -h : Prints utlity help instructions.
+1. term --list, -l : Prints the list of commands added by user.
+2. term --info, -i : Prints clTerm version and info.
+3. term --help, -h : Prints utlity help instructions.
 </pre>
 </br>
 
-**term --help** 
+**'term --help'** 
+
 </br>
+
 <img src="https://github.com/adimalla/clTerm/blob/v1.1/screenshots/Selection_329.jpg" width="650" height="450" title="CLI">
 </br>
 
