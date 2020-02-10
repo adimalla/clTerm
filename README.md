@@ -319,6 +319,7 @@ catch_exception(myConsole, EXCEPTION_HOLD_STATE);
 
 ## clTerm Default Commands and Testing
 </br>
+
 **After successfull build and run of application, the followig default screen will appear with '>$' prompt** 
 </br>
 
