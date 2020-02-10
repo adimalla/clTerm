@@ -323,7 +323,7 @@ catch_exception(myConsole, EXCEPTION_HOLD_STATE);
 **After successfull build and run of application, the followig default screen will appear with '>$' prompt** 
 </br>
 
-<img src="https://github.com/adimalla/clTerm/blob/v1.1/screenshots/Selection_333.jpg" width="650" height="450" title="CLI">
+<img src="https://github.com/adimalla/clTerm/blob/master/screenshots/Selection_333.jpg" width="650" height="450" title="CLI">
 </br>
 
 Current version of clTerm includes only one default command 'term' with three flags '--list', '--info' and '--help'
