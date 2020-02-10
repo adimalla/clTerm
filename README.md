@@ -20,7 +20,7 @@
 ## Description
 **_clTerm_** is an easy to port minimal API based serial terminal utility which adds a 'shell' like interface to the application and allows users to add standard C like "command line arguments" based functions, or commands to their application. This utility is implemented via callbacks, which allows portability across any micro-controller that supports serial protocols.
 
-Goal of this utlity to give users a shell like interface and a framework to add commands to their application without modifying every section of the code that is responsible for branching to user defined functions specially when there is a need of adding more functions, therefore making the application very modular. At the same time the utlity focuses on portablity, it is not dependednt on memory mapped peripherals or modules needed for accessing serial protocols. The user defined or vendor defined peripheral APIs can simply be linked to this utlity though the provided API operations structure, which consists of minimal operations like open, byte operations like (read_char and print_char) and close.
+Goal of this utlity is, to give users a shell like interface and a framework to add commands to their application without modifying every section of the code that is responsible for branching to user defined functions specially when there is a need of adding more functions, therefore making the application very modular. At the same time the utlity focuses on portablity, it is not dependednt on memory mapped peripherals or modules needed for accessing serial protocols. The user defined or vendor defined peripheral APIs can simply be linked to this utlity though the provided API operations structure, which consists of minimal operations like open, byte operations like (read_char and print_char) and close.
 
 Additionally it is a good academic excercise for learning how to add command line 'shell' like terminal to applications, learning string operations, linked lists and callbacks.
 <br/>
@@ -42,12 +42,12 @@ Additionally it is a good academic excercise for learning how to add command lin
 
 <br/>
 
-## Porting and Instalation
+## Porting and Installation
 **For New Application** </br>
-Clone repository to the destination directory, include CLTERM_API into include files for the IDE, exclude or remove Examples test code.
+Clone repository to the destination folder, include CLTERM_API/inc folder to include folders of the IDE, exclude or remove Examples folder of the repo.
 
 **Example Test Code** </br>
-Clone repository to the destination directory, include CLTERM_API and required board examples into the project directory.
+Clone repository to the destination folder, include CLTERM_API and required board examples from Examples folder of the respository into your project directory.
 
 puTTY terminal is recommended for application development and testing with this utility.
 <br/>
