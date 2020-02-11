@@ -23,6 +23,9 @@
 Goal of this utlity is, to give users a shell like interface and a framework to add commands to their application without modifying every section of the code that is responsible for branching to user defined functions specially when there is a need of adding more functions, therefore making the application very modular. At the same time the utlity focuses on portablity, it is not dependednt on memory mapped peripherals or modules needed for accessing serial protocols. The user defined or vendor defined peripheral APIs can simply be linked to this utlity though the provided API operations structure, which consists of minimal operations like open, byte operations like (read_char and print_char) and close.
 
 Additionally it is a good academic excercise for learning how to add command line 'shell' like terminal to applications, learning string operations, linked lists and callbacks.
+
+**_clTerm_** **is still under development and hasn't been fully doccumented**
+
 <br/>
 
 ## Features
