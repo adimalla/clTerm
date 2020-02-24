@@ -148,7 +148,8 @@ typedef struct _console_status
     uint8_t begin       : 1;  /*!< Console Begin Status            */
     uint8_t get_input   : 1;  /*!< Get string function call status */
     uint8_t lock        : 1;  /*!< Function Lock (not implemented) */
-    uint8_t reserved    : 6;  /*!< Reserved                        */
+    uint8_t comp       : 1;
+    uint8_t reserved    : 5;  /*!< Reserved                        */
 
 }console_status_t;
 
@@ -195,11 +196,27 @@ typedef struct _command_table
  * @param  baudrate     : baudrate / speed of serial terminal
  * @param  buffer       : data / text buffer for serial terminal
  * @param  alloc_type   : handle object allocation type, static/dynamic
- * @retval cl_term_t   : Error = NULL, Success = console object handle.
+ * @retval cl_term_t    : Error = NULL, Success = console object handle.
  *                        exception(return to handle)
  *                        Exceptions, -1, -2, -3, -4 (see exception values)
  ***************************************************************************/
 cl_term_t* console_open(console_ops_t *console_ops, uint32_t baudrate, void *buffer, console_alloc_type_t alloc_type);
+
+
+
+
+/**************************************************************************
+ * @brief  Constructor function to initialize console handle
+ *         (For already declared static object)
+ * @param  *console_ops : reference to console callback functions
+ * @param  baudrate     : baudrate / speed of serial terminal
+ * @param  buffer       : data / text buffer for serial terminal
+ * @retval uint8_t      : Error = 0, Success = 1
+ *                        exception(return to handle)
+ *                        Exceptions, -1, -2, -3, -4 (see exception values)
+ ***************************************************************************/
+uint8_t console_init(cl_term_t *console, console_ops_t *console_ops, uint32_t baudrate,
+                        void *buffer);
 
 
 

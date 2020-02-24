@@ -294,6 +294,79 @@ cl_term_t* console_open(console_ops_t *console_ops, uint32_t baudrate, void *buf
 
 
 
+/**************************************************************************
+ * @brief  Constructor function to initialize console handle
+ *         (For already declared static object)
+ * @param  *console_ops : reference to console callback functions
+ * @param  baudrate     : baudrate / speed of serial terminal
+ * @param  buffer       : data / text buffer for serial terminal
+ * @retval uint8_t      : Error = 0, Success = 1
+ *                        exception(return to handle)
+ *                        Exceptions, -1, -2, -3, -4 (see exception values)
+ ***************************************************************************/
+uint8_t console_init(cl_term_t *console, console_ops_t *console_ops, uint32_t baudrate,
+                        void *buffer)
+{
+
+    uint8_t func_retval     = 0;
+    uint8_t callback_retval = 0;
+
+    if(buffer == NULL || console_ops == NULL)
+    {
+        func_retval = 0;
+    }
+    else
+    {
+
+        console->allocation_type = CONSOLE_STATIC;
+
+        /* Configure input buffer */
+        console->input_buffer = (void*)buffer;
+
+
+        /* Configure Critical operations */
+        console->console_commands = console_ops;
+
+
+        /* Return exceptions in error condition */
+        if(console->console_commands->open == NULL)
+        {
+            console->exception = CONSOLE_OPEN_CMD_ERROR;
+        }
+        else if(console->console_commands->print_char == NULL)
+        {
+            console->exception = CONSOLE_PRINTCHR_CMD_ERROR;
+        }
+        else if(console->console_commands->read_char == NULL)
+        {
+            console->exception = CONSOLE_READCHR_CMD_ERROR;
+        }
+
+        if(console->exception < 0)
+            return 0;
+
+        /* Configure default operations */
+
+
+
+        /* Call console open to start console, returns 0 as error */
+        callback_retval = console->console_commands->open(baudrate);
+
+        if(!callback_retval)
+        {
+            console->exception = CONSOLE_OPEN_CALLBACK_ERROR;
+
+            func_retval = 0;
+        }
+    }
+
+
+    return func_retval;
+}
+
+
+
+
 
 /******************************************************************
  * @brief  Function to print to serial terminal through call-backs
