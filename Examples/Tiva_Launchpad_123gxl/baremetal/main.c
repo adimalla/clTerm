@@ -107,7 +107,7 @@
 
 
 
-//System clock and GPIO F for on-board led and button intilaization
+//System clock and GPIO F for on-board led and button initialization
 void initHw(void)
 {
 
@@ -591,6 +591,31 @@ int myCommand2(int argc, char **argv)
 
 
 
+int green_led(int argc, char **argv)
+{
+
+    if(argc < 2 || argc > 2)
+    {
+        console_print(myConsole, "error: incorrect number of args \n");
+    }
+    else
+    {
+        if(strcmp(argv[1], "on") == 0)
+        {
+            ONBOARD_GREEN_LED = 1;
+        }
+        else if(strcmp(argv[1], "off") == 0)
+        {
+            ONBOARD_GREEN_LED = 0;
+        }
+
+    }
+
+    return 0;
+}
+
+
+
 /**
  * main.c
  */
@@ -612,6 +637,7 @@ int main(void)
     /*Create console handle, initializes UART/serial hardware*/
     myConsole = console_open(&myUartOperations, BAUDRATE, serial_buffer, CONSOLE_STATIC);
 
+    console_init(myConsole, &myUartOperations, BAUDRATE, serial_buffer);
 
     /*Create table object*/
     command_list = create_command_list(myConsole, MAX_TABLE_SIZE);
@@ -621,6 +647,8 @@ int main(void)
     exception  = add_command(command_list, "red", myCommand1);
 
     exception |= add_command(command_list, "print", myCommand2);
+
+    add_command(command_list, "green", green_led);
 
 
     throw_exception(myConsole, (console_exceptions_t)exception);
