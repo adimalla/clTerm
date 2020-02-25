@@ -604,16 +604,16 @@ int8_t console_begin(cl_term_t *console, command_table_t *command_table)
 
 
 
-/*****************************************************************
+/***********************************************************************
  * @brief  Function to start the console and print console info
  * @param  *console      : reference to console handle
  * @param  *input_length : length of input buffer to be filled
- * @retval int8_t        : Error = -7 (exception), Success = 0
- *****************************************************************/
-int8_t console_get_string(cl_term_t *console, uint16_t input_length)
+ * @retval int16_t       : Error = -7 (exception), Success = bytes read
+ ***********************************************************************/
+int16_t console_get_string(cl_term_t *console, uint16_t input_length)
 {
 
-    int8_t func_retval = 0;
+    int16_t func_retval = 0;
 
     char     char_input  = 0;
     char     next_1      = 0;
@@ -652,6 +652,8 @@ int8_t console_get_string(cl_term_t *console, uint16_t input_length)
                 /* Go to new line with carriage return after done entering the text */
                 console->console_commands->print_char('\r');
                 console->console_commands->print_char('\n');
+
+                func_retval = char_count;
 
                 char_count = 0;
 
@@ -701,8 +703,6 @@ int8_t console_get_string(cl_term_t *console, uint16_t input_length)
                 {
                     console->input_buffer[char_count] = '\0';
 
-                    char_count = 0;
-
                     console_print(console, "\n");
                     console_print(console, "\n");
 
@@ -712,6 +712,10 @@ int8_t console_get_string(cl_term_t *console, uint16_t input_length)
                     console_print(console, "Input Length Exceeded \n");
 
                     console_print(console, "\n");
+
+                    func_retval = char_count;
+
+                    char_count  = 0;
 
                     break;
                 }

@@ -244,13 +244,13 @@ int8_t console_begin(cl_term_t *console, command_table_t *command_table);
 
 
 
-/*****************************************************************
+/***********************************************************************
  * @brief  Function to start the console and print console info
  * @param  *console      : reference to console handle
  * @param  *input_length : length of input buffer to be filled
- * @retval int8_t        : Error = -7 (exception), Success = 0
- *****************************************************************/
-int8_t console_get_string(cl_term_t *console, uint16_t input_length);
+ * @retval int16_t       : Error = -7 (exception), Success = bytes read
+ ***********************************************************************/
+int16_t console_get_string(cl_term_t *console, uint16_t input_length);
 
 
 
